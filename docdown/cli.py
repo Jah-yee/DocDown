@@ -252,6 +252,11 @@ def main(
         else:
             extractor_name = str(extractor_used) if extractor_used is not None else None
 
+        if not (1 <= result.chunk_number <= len(split_result.chunk_paths)):
+            raise click.ClickException(
+                f"Chunk number {result.chunk_number} out of range (1..{len(split_result.chunk_paths)})"
+            )
+
         chunk_validation = validate_chunk(
             markdown_path,
             split_result.chunk_paths[result.chunk_number - 1],
