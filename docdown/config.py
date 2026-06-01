@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from urllib.parse import urlparse
 
 
 _VALID_EXTRACTORS = {"grobid", "pdfminer"}
@@ -220,6 +221,12 @@ def _validate_semantics(cfg: Config) -> None:
         raise ConfigError(f"fallback_extractor must be one of: {sorted(_VALID_EXTRACTORS)}")
     if cfg.toc_depth < 1 or cfg.toc_depth > 6:
         raise ConfigError("toc_depth must be between 1 and 6.")
+    parsed_grobid = urlparse(cfg.grobid_url)
+    if parsed_grobid.scheme not in ("http", "https") or not parsed_grobid.netloc:
+        raise ConfigError(
+            f"grobid_url must be an http(s) URL with a host, got: {cfg.grobid_url!r}"
+        )
+
     if cfg.log_level not in _VALID_LOG_LEVELS:
         raise ConfigError(f"log_level must be one of: {sorted(_VALID_LOG_LEVELS)}")
     if not math.isfinite(cfg.validation.min_output_ratio):
