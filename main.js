@@ -275,7 +275,7 @@ async function convert(filepath) {
       if (code === 0) {
         console.log("Converted successfully.");
         showNotification({
-          title: "Markdown converted sucessfully",
+          title: "Markdown converted successfully",
           body: "Exported document saved in " + getOutputDirectory(filepath),
         });
         shell.showItemInFolder(
@@ -434,7 +434,7 @@ async function externalConvert(filepath) {
               } else {
                 console.log("Completed!");
                 showNotification({
-                  title: "Markdown converted sucessfully",
+                  title: "Markdown converted successfully",
                   body:
                     "Exported document saved in " + getOutputDirectory(filepath),
                 });
